@@ -5,8 +5,9 @@ class Account
     @password = password_parm
   end
   
-  def email
-    @email
-  end
+  
+  #accessors
+  def email; @email end
+  def password; @password end
     
 end
