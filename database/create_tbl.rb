@@ -13,3 +13,5 @@ rows = db.execute <<-SQL
 );
 SQL
 
+rows
+

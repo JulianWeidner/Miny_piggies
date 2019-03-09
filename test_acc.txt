@@ -1,0 +1,4 @@
+email: test@testmail.com
+firstname: test
+lastname: tester
+password: test123

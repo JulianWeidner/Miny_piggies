@@ -17,16 +17,33 @@ class Account
   def match_pass?(check_pass_parm)
     @password == check_pass_parm
   end
+  
+  def check_email
+    
+  end
+  def check_pass
+    
+  end
   #called before sql storage
   def pass_encryptor
     @password = BCrypt::Password.create(@password)
   end
-   
+
+  #Sql methods 
+  def sql_find
+    account = @db.execute('SELECT * FROM accounts WHERE email = ?',[@email])
+  end
+  
+  def sql_write(first_parm, last_parm)
+     @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
+     VALUES(?,?,?,?,?);',[@email, @password, firs_parm, last_parm, 0])
+  end 
+  
+
   
   
   #SQL account creation
   def create_acc
-    
     puts "First Name?"
       first = gets.chomp.downcase
     puts "last name?"
@@ -41,15 +58,15 @@ class Account
     if match_pass?(check_password)
       #create account if its true
       pass_encryptor
-     
-      @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
-     VALUES(?,?,?,?,?);',[@email, @password, first, last, 0])
+      sql_write(first, last)
     else
       #just error out app for now
       print "passwords dont match"
       exit
     end
   end
+  
+
   
 
 

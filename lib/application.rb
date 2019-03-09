@@ -1,4 +1,19 @@
 require './lib/classes/account.rb'
 
-user = Account.new("temp","temp")
-user.create_acc
+logoff = false
+
+def get_login
+  print "| Email: "
+  email = gets.chomp.downcase
+  print "| Password: "
+  password = gets.chomp
+  return email, password
+end
+
+
+while logoff == false
+  email, password = get_login
+  user = Account.new(email,password)
+  user.sql_find
+  logoff = true
+end

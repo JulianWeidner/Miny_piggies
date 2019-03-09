@@ -1,0 +1,11 @@
+Account Class
+  Change methods that are only used within the class to private
+  Change login method using better sql(EXISTS & AND) 
+    http://www.sqlitetutorial.net/sqlite-exists/
+    https://stackoverflow.com/questions/13581168/optimal-query-for-checking-login-detailsusername-and-password
+  
+ Application
+  1. Control flow for logging in
+  
+ Database
+  Test out some  blobs n piggies
