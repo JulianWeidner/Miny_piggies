@@ -11,7 +11,7 @@ class Account
     
   #accessors
   def email; @email end
-  def password; @password end
+  def password; @password end 
   
     #called during creation only. Not for login.
   def match_pass?(check_pass_parm)
@@ -19,56 +19,41 @@ class Account
   end
   
   def check_email
-    
   end
-  def check_pass
-    
-  end
+  
+
   #called before sql storage
-  def pass_encryptor
+  def pass_encryptor #private
     @password = BCrypt::Password.create(@password)
   end
 
   #Sql methods 
-  def sql_find
+  def sql_get_acc #private
     account = @db.execute('SELECT * FROM accounts WHERE email = ?',[@email])
   end
   
-  def sql_write(first_parm, last_parm)
+  def sql_write(first_parm, last_parm) #private?
      @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
      VALUES(?,?,?,?,?);',[@email, @password, firs_parm, last_parm, 0])
   end 
   
-
-  
-  
-  #SQL account creation
-  def create_acc
-    puts "First Name?"
-      first = gets.chomp.downcase
-    puts "last name?"
-      last = gets.chomp.downcase
-    puts "Email?(this will be used to login)"
-      @email = gets.chomp.downcase
-    puts "password?"
-      @password = gets.chomp
-    puts "password again"
-      check_password = gets.chomp
-    #handles password matching in a hacky way
-    if match_pass?(check_password)
-      #create account if its true
-      pass_encryptor
-      sql_write(first, last)
-    else
-      #just error out app for now
-      print "passwords dont match"
-      exit
-    end
+  def check_pass?
+     account = sql_get_acc #returns an array of the sql value the second val being the acc pass
+     account[0][1] == @password
   end
   
 
   
+  
+ #account creation
 
-
-    
+  
+  def login
+   recrypted_pass = BCrypt::Password.create(@password)
+   account = @db.execute('SELECT EXISTS (SELECT * FROM accounts WHERE email = ? AND password = ?);',[@email, recrypted_pass])
+   puts account[0][1]
+   puts recrypted_pass
+   puts  "Logged in"
+  end 
 end
+ 

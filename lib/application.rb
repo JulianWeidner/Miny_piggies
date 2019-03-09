@@ -13,7 +13,7 @@ end
 
 while logoff == false
   email, password = get_login
-  user = Account.new(email,password)
-  user.sql_find
+  user = Account.new(email, password)
+  print user.login
   logoff = true
 end
