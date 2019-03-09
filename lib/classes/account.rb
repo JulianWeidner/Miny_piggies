@@ -12,6 +12,7 @@ class Account
   #accessors
   def email; @email end
   def password; @password end 
+  def account; @account end 
   
     #called during creation only. Not for login.
   def match_pass?(check_pass_parm)
@@ -29,31 +30,46 @@ class Account
 
   #Sql methods 
   def sql_get_acc #private
-    account = @db.execute('SELECT * FROM accounts WHERE email = ?',[@email])
+    account = @db.execute('SELECT email, first_name, last_name, total_val, piggies FROM accounts WHERE email = ?',[@email])
   end
+
+  def sql_get_pass
+    password = @db.execute('SELECT password FROM accounts WHERE email = ?;',[@email])
+    password[0][0].to_s
+  end
+
   
   def sql_write(first_parm, last_parm) #private?
      @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
      VALUES(?,?,?,?,?);',[@email, @password, firs_parm, last_parm, 0])
   end 
   
-  def check_pass?
-     account = sql_get_acc #returns an array of the sql value the second val being the acc pass
-     account[0][1] == @password
-  end
+
   
+  
+  #def create_test_acc
+    #pass_encryptor
+    #@db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
+     #VALUES(?,?,?,?,?);',['test@testmail.com', @password, 'test_name', 'tested_name', 0])
+  #end 
 
   
   
  #account creation
 
-  
+#account login
   def login
-   recrypted_pass = BCrypt::Password.create(@password)
-   account = @db.execute('SELECT EXISTS (SELECT * FROM accounts WHERE email = ? AND password = ?);',[@email, recrypted_pass])
-   puts account[0][1]
-   puts recrypted_pass
-   puts  "Logged in"
+    encrypted_pass = BCrypt::Password.new(sql_get_pass)
+    if encrypted_pass == @password
+      @account = sql_get_acc
+      puts "Logged in!"
+    else
+      "Error loggin in"
+      exit 
+    end
   end 
+
+
+#Account End
 end
  
