@@ -8,12 +8,19 @@ class Account
     @password = password_parm
     @db = SQLite3::Database.open('./database/account.db')
   end
-    
+  
+  
   #accessors
   def email; @email end
   def password; @password end 
   def account; @account end 
-  
+  #account accessors
+  def first_name; @account[0][1] end
+  def last_name; @account[0][2] end
+  def acc_val; @account[0][3] end
+  def piggies; @account[0][4] end
+    
+
     #called during creation only. Not for login.
   def match_pass?(check_pass_parm)
     @password == check_pass_parm
@@ -44,7 +51,6 @@ class Account
      VALUES(?,?,?,?,?);',[@email, @password, firs_parm, last_parm, 0])
   end 
   
-
   
   
   #def create_test_acc
@@ -62,12 +68,19 @@ class Account
     encrypted_pass = BCrypt::Password.new(sql_get_pass)
     if encrypted_pass == @password
       @account = sql_get_acc
-      puts "Logged in!"
+      puts "Welcome Back, #{first_name}"
     else
       "Error loggin in"
       exit 
     end
   end 
+  
+  
+  #Good luck. ITs about to be unreadable below this point
+  
+
+  
+ 
 
 
 #Account End

@@ -10,15 +10,32 @@ def get_login
   return email, password
 end
 
+def account_view(user_obj_parm)
+  user = user_obj_parm
+  #puts data
+  view = %(
+   ____________________________________________
+  |                                            |
+  |  Account Value: $#{user.acc_val}                 
+  |¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
+  |#{user.piggies} 
+  |
+  |
+  |
+  |
+  |¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
+  | 
+  )
+end
+
 
 while logoff == false
   email, password = get_login
   user = Account.new(email, password)
   print user.login
-  #user_data is a 2d array of the entire sql acc
-  #array = [0][email, firstname, lastname, acc val, piggies]
-  user_data = user.account 
-  print user_data
+  #create acc view
+  print account_view(user)
+  
   logoff = true
 end
 
