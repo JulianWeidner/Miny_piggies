@@ -1,5 +1,6 @@
 require 'sqlite3'
 require 'bcrypt'
+require 'yaml'
 
 class Account
   
@@ -48,7 +49,7 @@ class Account
   
   def sql_write(first_parm, last_parm) #private?
      @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
-     VALUES(?,?,?,?,?);',[@email, @password, firs_parm, last_parm, 0])
+     VALUES(?,?,?,?,?);',[@email, @password, firs_parm, last_parm, Hash['Piggies']])
   end 
   
   
@@ -61,7 +62,10 @@ class Account
 
   
   
- #account creation
+#account creation
+  def create_acc(first, last)
+    sql_write(first,last)
+  end
 
 #account login
   def login
@@ -77,7 +81,9 @@ class Account
   
   
   #Good luck. ITs about to be unreadable below this point
-  
+  def create_piggy
+    
+  end
 
   
  
