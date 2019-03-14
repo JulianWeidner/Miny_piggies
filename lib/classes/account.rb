@@ -72,7 +72,9 @@ class Account
     encrypted_pass = BCrypt::Password.new(sql_get_pass)
     if encrypted_pass == @password
       @account = sql_get_acc
-      puts "Welcome Back, #{first_name}"
+      
+      puts "\nWelcome Back, #{first_name}\n"
+      
     else
       "Error loggin in"
       exit 

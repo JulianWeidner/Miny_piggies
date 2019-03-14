@@ -1,6 +1,6 @@
 require './lib/classes/account.rb'
 
-logoff = false
+
 
 def get_login
   print "| Email: "
@@ -26,81 +26,97 @@ def get_create
   else
     new_user = Account.new(email, pass).create(first_name,last_name)
   end
-  
-  
 end
 
 def startup_view
-  view = %(
-   ____________________________________________
-  |                                            |
-  |                                            |
-  |                                            |
-  |                Miny Piggies                |
-  |                                            |
-  |                                            |
-  |                                            |
-  |                                            |
-  |______________________ Center line          |
-  |        _____________________________       |                             |
-  |       |            Login            |      |
-  |        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯       |
-  |        _____________________________       |                             |
-  |       |        Create Account       |      |
-  |        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯       |
-  |        _____________________________       |                             |
-  |       |            Help             |      |
-  |        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯       |
-  |                                            |
-  |____________________________________________|                                      |
-  | INPUT(login,create,help): 
-)
+  view = <<-string
+ ____________________________________________
+|                                            |
+|                                            |
+|                                            |
+|                Miny Piggies                |
+|                                            |
+|                                            |
+|                                            |
+|                                            |
+|______________________ Center line          |
+|        _____________________________       |
+|       |            Login            |      |
+|        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯       |
+|        _____________________________       |
+|       |        Create Account       |      |
+|        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯       |
+|        _____________________________       |
+|       |            Help             |      |
+|        ¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯       |
+|                                            |
+|____________________________________________|
+string
+  
+  print view
+  print "| INPUT(login,create,help): "
   input = gets.chomp.downcase
 end
 
-def account_view(user_obj_parm)
-  user = user_obj_parm
-  #puts data
-  view = %(
-   ____________________________________________
-  |                                            |
-  |  Account Value: $#{user.acc_val}                 
-  |¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
-  |#{user.piggies} 
-  |
-  |
-  |
-  |
-  |¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
-  | 
-  )
-end
-
-  def app()
-    running = true 
-    while running == true
-      print start_input = startup_view
-      if start_input == 'create'
-        puts "call create command WIP"
-        quit == tue
-      else if start_input == 'login'
-        email, password = get_login
-        user = Account.new(email, password)
-        print user.login
-        #create acc view
-        print account_view(user)
-        quit == true
-      else
-        "puts error"
-         quit = true
-      end
-    end
+  def account_view(user_obj_parm)
+    user = user_obj_parm
+    #puts data
+    view = %(
+ ____________________________________________
+|                                            |
+|  Account Value: $#{user.acc_val}                 
+|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
+|#{user.piggies} 
+|
+|
+|
+|
+|____________________________________________|
+|_________
+| ACTIONS |__________________________________|
+|¯¯¯¯¯¯¯¯¯                                   |
+|             | Piglet Actions |             |
+|                                            |
+| Create Piglet                              |
+| Add Funds from the Sow                     |
+| Transfer funds between Piglets             |
+| Delete Piglet                              |
+|                                            |
+|             |  Sow Actions  |              |
+|                                            |
+| Add funds                                  |
+| Withdraw Funds                             |
+| Transfer To Piglet                         | 
+| Setup Auto Feed                            | 
+)
+    print view
+    print "| INPUT: "
+    gets.chomp.downcase
   end
 
-#call app
-app 
-
+ 
+def application
+  start_input = startup_view
+  if start_input == 'login'
+    #login
+    email, pass = get_login
+    user = Account.new(email, pass)
+    user.login
+    #show financial and actions
+    account_view(user)
+    
+  elsif start_input == 'create'
+    get_create
+  else
+    puts "not coded"
+    exit
+  end
   
-#application end  
 end
+#call app
+#Sapp 
+
+application
+
+
 
