@@ -24,7 +24,7 @@ def create_account
   password = 'test'
   first = 'tester'
   last = 'tested'
-  piggies = {piggies: "" }.to_yaml
+  piggies = {"piggies" => "" }.to_yaml
   @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val, piggies)
   VALUES(?,?,?,?,?,?);',[email, password, first, last, 0, piggies])
 end
@@ -37,11 +37,9 @@ end
 #re_yammed = un_yam.to_yaml
 #print re_yammed
 # 
-def piggies_to_rb(email)
-  piggies_sql = @db.execute('SELECT piggies FROM accounts where email = ? ',[email])
-  piggies_string = piggies_sql
-  print piggies_string[0].class
-  
+def piggies_ruby(account)
+  piggies_sql = @db.execute('SELECT piggies FROM accounts where email = ? ',[account])
+  piggies_hash = YAML.load(piggies_sql[0][0])
 end 
 
 
