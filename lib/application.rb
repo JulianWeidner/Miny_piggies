@@ -107,7 +107,7 @@ def application
     #show financial and actions
     account_input = account_view(user)
     if account_input == 'create'
-          new_piglet = user.create_piglet(user.piggies, 'Date Night', 100)
+          new_piglet = user.create_piglet(Hash.new, 'Date Night', 100)
           print new_piglet
         
     end

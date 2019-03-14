@@ -50,7 +50,7 @@ class Account
   
   def sql_write(first_parm, last_parm) #private?
      @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
-     VALUES(?,?,?,?,?);',[@email, @password, firs_parm, last_parm, Hash['Piggies']])
+     VALUES(?,?,?,?,?);',[@email, @password, first_parm, last_parm, Hash['Piggies']])
   end 
   
   
