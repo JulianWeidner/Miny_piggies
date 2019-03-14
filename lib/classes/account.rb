@@ -1,9 +1,10 @@
 require 'sqlite3'
 require 'bcrypt'
 require 'yaml'
+require './lib/modules/piggies.rb'
 
 class Account
-  
+  include Piggies
   def initialize(email_parm, password_parm)
     @email = email_parm
     @password = password_parm
@@ -74,18 +75,17 @@ class Account
       @account = sql_get_acc
       
       puts "\nWelcome Back, #{first_name}\n"
-      
+      true
     else
       "Error loggin in"
+      return false
       exit 
     end
   end 
   
   
   #Good luck. ITs about to be unreadable below this point
-  def create_piggy
-    
-  end
+  #reate
 
   
  

@@ -94,6 +94,8 @@ end
     gets.chomp.downcase
   end
 
+
+
  
 def application
   start_input = startup_view
@@ -103,10 +105,15 @@ def application
     user = Account.new(email, pass)
     user.login
     #show financial and actions
-    account_view(user)
+    account_input = account_view(user)
+    if account_input == 'create'
+          new_piglet = user.create_piglet(user.piggies, 'Date Night', 100)
+          print new_piglet
+        
+    end
     
   elsif start_input == 'create'
-    get_create
+
   else
     puts "not coded"
     exit
