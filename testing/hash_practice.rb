@@ -27,20 +27,29 @@ def create_account
   piggies = {piggies: "" }.to_yaml
   @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val, piggies)
   VALUES(?,?,?,?,?,?);',[email, password, first, last, 0, piggies])
-=begin
+end
 #add = create_piglet(piggies,'rent',500)
 #piggies 
-yam = piggies.to_yaml
+#yam = piggies.to_yaml
 #print yam
-un_yam = YAML.load(yam)
-un_yam[:piggies] = add
-re_yammed = un_yam.to_yaml
-print re_yammed
-=end 
-end
+#un_yam = YAML.load(yam)
+#un_yam[:piggies] = add
+#re_yammed = un_yam.to_yaml
+#print re_yammed
+# 
+def piggies_to_rb(email)
+  piggies_sql = @db.execute('SELECT piggies FROM accounts where email = ? ',[email])
+  piggies_string = piggies_sql
+  print piggies_string[0].class
+  
+end 
+
+
 
 def add_piglet
  piggies = @db.execute()
 end
 
-create_account
+#load_piggies
+#create_account
+piggies_to_rb('test')
