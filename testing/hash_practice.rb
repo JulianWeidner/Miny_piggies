@@ -7,21 +7,22 @@ require 'sqlite3'
 
 
 
-def create_piglet(piggies, key, goal)
-  piglet = Hash.new
-  piglet['current'] = 0
-  piglet['goal'] = goal
-  piglet['withdraw_percentage'] = 0
-  piglet['deposite_percentage'] = 0
-  piglet['locked'] = false
-  puts piggies
-  if piggies['piggies'] = ""
-    piggies['piggies'] = {key => piglet}
-  elsif piggies['piggies'] != ""
-    piggies['piggies'].merge({key => piglet})
-  end 
-  #new piggies
-  piggies
+
+def add_piglet(piggies_parm, goal_name, target_val)
+  #blank or already filled piglet container hash
+  piggies = piggies_parm
+  piglet = {goal_name => {
+  'current_val' => 0, 
+  'target_val' => target_val,
+  'withdraw_percentage' => 0,
+  'deposit_percentage' => 0,
+  'locked'  => false}}
+
+  if piggies.any?
+    return piggies['piggies'].merge!(piglet)
+  else 
+    return piggies['piggies'] = piglet
+  end
 end
 
 def create_account
@@ -29,9 +30,10 @@ def create_account
   password = 'test'
   first = 'tester'
   last = 'tested'
-  piggies = {"piggies" => "" }.to_yaml
+  piggies = Hash.new
   @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val, piggies)
-  VALUES(?,?,?,?,?,?);',[email, password, first, last, 0, piggies])
+  VALUES(?,?,?,?,?,?);',[email, password, first, last, 0, piggies.to_yaml])
+ 
 end
 
 def update_piggies(ruby_hash, email)
@@ -56,26 +58,9 @@ end
 
 
 
-def add_piglet(email)
-  #get origianl Piggies hash
-  piggies_hash = piggies_to_ruby_hash(email)
-  
-  #get the information of the goal
-  print "\n| Goal Name: "
-  key = gets.chomp.capitalize
-  print "\n| Target Amount: "
-  goal_target = gets.chomp.to_i
-  
-  #create the ruby hash
-  new_piggies_hash = create_piglet(piggies_hash, key, goal_target)
-  update_piggies(new_piggies_hash, email)
-  
-  
-  
- #piggies = @db.execute()
-end
+puts "Goal name?"
+goal = gets.chomp.downcase
+puts "Target Value"
+targ_val = gets.chomp.to_i
 
-#load_piggies
-#create_account
-add_piglet('test')
-add_piglet('test')
+add_piglet(piggies_to_ruby_hash('test'), goal, targ_val)
