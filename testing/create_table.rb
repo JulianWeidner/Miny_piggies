@@ -1,3 +1,5 @@
+
+    
 require 'sqlite3'
 
 db = SQLite3::Database.new('test.db')
@@ -12,4 +14,3 @@ rows = db.execute <<-SQL
     piggies blob
 );
 SQL
-
