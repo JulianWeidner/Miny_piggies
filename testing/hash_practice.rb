@@ -56,10 +56,9 @@ def add_piglet(email)
  
   #if it is a new account and has 0 piglets merge wont work on a nil hash, so I set it equal to the new hash. 
   if piggies.any?
-    piggies.merge()
+   update_piggies(piggies.merge(piglet), email)
   else 
-    new_piggies = piggies['hash'] = {'piggies' => piglet}
-    update_piggies(new_piggies, email)
+    update_piggies(piggies['piggies'] = piglet, email)
   end
 
 end
@@ -80,6 +79,7 @@ end
 
 #create_account
 add_piglet('test')
+
 
 
 
