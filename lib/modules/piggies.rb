@@ -11,11 +11,14 @@ module Piggies
   #gets the value of the hash from SQL
   def get_piggies(account)
     piggies_sql = @db.execute('SELECT piggies FROM accounts where email = ? ',[account])
-    return YAML.load(piggies_sql[0][0])
+    if piggies_sql != nil   
+      return YAML.load(piggies_sql[0][0])
+    end
   end 
     
   def add_piglet(email)
   #get the hash from the account
+  
   piggies_hash = get_piggies(email)
   
   #gets piglet info
@@ -48,5 +51,5 @@ end
 
   
   
-    private :update_piggies, :piggies_to_ruby_hash
+    private :update_piggies, :get_piggies
 end

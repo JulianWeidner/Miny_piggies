@@ -1,5 +1,10 @@
 require './lib/classes/account.rb'
 
+def create_test_acc
+  user = Account.new('test@testmail.com','test123')
+  user.sql_write
+end
+  
 
 
 def get_login
@@ -24,7 +29,7 @@ def get_create
   if pass != pass_check
     exit
   else
-    new_user = Account.new(email, pass).create(first_name,last_name)
+    new_user = Account.new(email, pass).create_acc(first_name,last_name)
   end
 end
 
@@ -107,14 +112,16 @@ def application
     #show financial and actions
     account_input = account_view(user)
     if account_input == 'create'
-          new_piglet = user.create_piglet(Hash.new, 'Date Night', 100)
-          print new_piglet
+          user.add_piglet(user.email)
+      
+     
         
     end
     
-  elsif start_input == 'create'
+    elsif start_input == 'create'
 
-  else
+
+    else
     puts "not coded"
     exit
   end

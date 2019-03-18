@@ -48,10 +48,12 @@ class Account
   end
 
   
-  def sql_write(first_parm, last_parm) #private?
-     @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
-     VALUES(?,?,?,?,?);',[@email, @password, first_parm, last_parm, Hash['Piggies']])
-  end 
+  def sql_write(first_parm, last_parm)#private?
+    pass_encryptor
+    piggies = {}
+      @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val, piggies)
+  VALUES(?,?,?,?,?,?);',[@email, @password, first_parm, last_parm, 0, piggies.to_yaml])
+    end 
   
   
   
