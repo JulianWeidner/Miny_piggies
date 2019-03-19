@@ -35,6 +35,11 @@ def get_create
   end
 end
 
+def univ_input
+  print "| Input: "
+  gets.chomp
+end
+
 #VIEW METHODS
 #all these methods will handle view printing, some of them have input returns. I'll write a universal input method shortly
 def startup_view
@@ -114,10 +119,17 @@ def application
     user.login
     #show financial and actions
     account_input = account_view(user)
-    if account_input == 'create'
-          user.add_piglet(user.email)
-    end
-  
+    case account_input
+      when 'create'
+        user.add_piglet(user.email)
+      when 'add funds'
+        puts "How much money are you adding?"
+        user.add_funds(univ_input.to_i)
+      when 'withdraw funds'
+        puts "How much money are you withdrawing?"
+        user.withdraw_funds(univ_input.to_i)
+    end 
+    
   elsif start_input == 'create'
   else
     puts "not coded"
@@ -125,7 +137,7 @@ def application
   end
 end
 
-Actually run application
+#Actually run application
 application
 
 

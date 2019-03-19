@@ -2,11 +2,12 @@ require 'sqlite3'
 require 'bcrypt'
 require 'yaml'
 require './lib/modules/piggies.rb'
+require './lib/modules/funds.rb'
 
 class Account
   
   include Piggies #modules
-  
+  include Funds
   def initialize(email_parm, password_parm)
     @email = email_parm
     @password = password_parm
@@ -69,6 +70,7 @@ class Account
     sql_write(first,last)
   end
 
+  
 #account login
   def login
     if pass_verified?
