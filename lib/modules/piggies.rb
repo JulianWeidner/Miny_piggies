@@ -25,6 +25,14 @@ module Piggies
       return YAML.load(piggies_sql[0][0])
     end
   end 
+  
+  def deposit_percentage(goal, percentage)
+    piggies = get_piggies(@email)
+    piggies["#{goal}"] ['deposit_percentage'] = percentage
+    piggies["#{goal}"]
+    update_piggies(piggies, @email)
+  end
+
 
   def add_piglet(email)
     #get the hash from the account
@@ -50,6 +58,13 @@ module Piggies
       update_piggies(piggies['piggies'] = piglet, email)
     end
   end
+  
+  
+  
+  def set_deposit_percentage
+    
+  end
+  
 
   
     private :update_piggies, :get_piggies
