@@ -4,18 +4,20 @@ require 'yaml'
 require './lib/modules/piggies.rb'
 
 class Account
-  include Piggies
+  
+  include Piggies #modules
+  
   def initialize(email_parm, password_parm)
     @email = email_parm
     @password = password_parm
     @db = SQLite3::Database.open('./database/account.db')
   end
   
-  
   #accessors
   def email; @email end
   def password; @password end 
   def account; @account end 
+  
   #account accessors
   def first_name; @account[0][1] end
   def last_name; @account[0][2] end
@@ -23,15 +25,16 @@ class Account
   def piggies; @account[0][4] end
     
 
-    #called during creation only. Not for login.
+   #called during creation only. Not for login.
   def match_pass?(check_pass_parm)
     @password == check_pass_parm
   end
   
-  def check_email
+  def pass_verified?
+    encrypted_pass = BCrypt::Password.new(sql_get_pass)
+    encrypted_pass == @password ? true : false  
   end
-  
-
+  #check existing account(email)
   #called before sql storage
   def pass_encryptor #private
     @password = BCrypt::Password.create(@password)
@@ -72,16 +75,13 @@ class Account
 
 #account login
   def login
-    encrypted_pass = BCrypt::Password.new(sql_get_pass)
-    if encrypted_pass == @password
+    if pass_verified?
       @account = sql_get_acc
-      
       puts "\nWelcome Back, #{first_name}\n"
       true
     else
-      "Error loggin in"
+      print "|\n Error loggin in\n| Try Again"
       return false
-      exit 
     end
   end 
   
