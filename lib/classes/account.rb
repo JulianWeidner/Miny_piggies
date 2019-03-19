@@ -25,7 +25,7 @@ class Account
   def piggies; @account[0][4] end
     
 
-   #called during creation only. Not for login.
+  #called during creation only. Not for login.
   def match_pass?(check_pass_parm)
     @password == check_pass_parm
   end
@@ -40,33 +40,29 @@ class Account
     @password = BCrypt::Password.create(@password)
   end
 
-  #Sql methods 
-  def sql_get_acc #private
+  #Account SQL methods
+  #These deal with any kind of name/email/password etc.
+  #Most of them are private because they're only internally called by methods within this class :)
+  #Piglet/Piggies Specific SQL updates are found in the piggies module
+  #
+  #Private Methods are defined at the bottom of the class, but here is a list.
+  #
+  #
+  def sql_get_acc #private returns an array of the account and its values
     account = @db.execute('SELECT email, first_name, last_name, total_val, piggies FROM accounts WHERE email = ?',[@email])
   end
 
-  def sql_get_pass
+  def sql_get_pass #private
     password = @db.execute('SELECT password FROM accounts WHERE email = ?;',[@email])
     password[0][0].to_s
   end
 
-  
-  def sql_write(first_parm, last_parm)#private?
+  def sql_write(first_parm, last_parm)#private
     pass_encryptor
     piggies = {}
       @db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val, piggies)
   VALUES(?,?,?,?,?,?);',[@email, @password, first_parm, last_parm, 0, piggies.to_yaml])
-    end 
-  
-  
-  
-  #def create_test_acc
-    #pass_encryptor
-    #@db.execute('INSERT INTO accounts(email, password, first_name, last_name, total_val)
-     #VALUES(?,?,?,?,?);',['test@testmail.com', @password, 'test_name', 'tested_name', 0])
-  #end 
-
-  
+  end 
   
 #account creation
   def create_acc(first, last)
@@ -84,15 +80,6 @@ class Account
       return false
     end
   end 
-  
-  
-  #Good luck. ITs about to be unreadable below this point
-  #reate
-
-  
- 
-
 
 #Account End
 end
- 
