@@ -26,6 +26,15 @@ module Piggies
     end
   end 
   
+  def transfer_to_piggies(goal, transfer_amount)
+    total_val = acc_val
+    piggies = get_piggies(@email)
+    piggies["#{goal}"]['current_val'] += transfer_amount
+    update_piggies(piggies, @email)
+  end
+  
+  
+  
   def deposit_percentage(goal, percentage)
     piggies = get_piggies(@email)
     piggies["#{goal}"] ['deposit_percentage'] = percentage

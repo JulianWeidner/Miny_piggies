@@ -130,13 +130,20 @@ def application
         user.withdraw_funds(univ_input.to_i)
       when 'auto feed'
         puts "| This will be a percentage of each deposit made into the total account.\n| It will automatically allocate that money to the specified piglet (goal).\n"
-        puts "What Goal would you like to setup?"
+        puts "| What Goal would you like to auto feed"
         goal = univ_input
-        puts "What percentage?(for 5% type: 5)"
+        puts "| What percentage?(for 5% type: 5)"
         percentage = univ_input.to_i
-        print user.deposit_percentage(goal, percentage)
-       
+        user.deposit_percentage(goal, percentage)
+      when 'transfer to piglet'
+        puts ">>>>>>>>> Currently only gets from the accounts total val"
+        puts "| To which goal: "
+        transfer_to = univ_input
+        puts "| Transfer Amount: "
+        transfer_amount = univ_input.to_i
+        user.transfer_to_piggies(transfer_to, transfer_amount)
     end 
+    
     
   elsif start_input == 'create'
   else
