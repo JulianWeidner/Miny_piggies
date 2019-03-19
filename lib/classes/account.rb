@@ -8,6 +8,7 @@ class Account
   
   include Piggies #modules
   include Funds
+  
   def initialize(email_parm, password_parm)
     @email = email_parm
     @password = password_parm
