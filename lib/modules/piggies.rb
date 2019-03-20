@@ -38,11 +38,26 @@ module Piggies
   def deposit_percentage(goal, percentage)
     piggies = get_piggies(@email)
     piggies["#{goal}"] ['deposit_percentage'] = percentage
-    piggies["#{goal}"]
     update_piggies(piggies, @email)
   end
-
-
+  
+  def withdraw_percentage(goal, percentage)
+    piggies = get_piggies(@email)
+    piggies["#{goal}"]['withdraw_percentage'] = percentage
+    update_piggies(piggies, @email)
+  end
+  
+  def set_lock(goal, lock_status)
+    piggies = get_piggies(@email)
+    #thisneeds to be re-writen to check the curren value and just swap from 0 to 1, which also means DB needs changed :)
+    if lock_status == 'true'
+      piggies["#{goal}"]['locked'] = 'true'
+    elsif lock_status == 'false'
+      piggies["#{goal}"]['locked'] = 'false'
+    end
+    update_piggies(piggies, @email)
+  end
+  
   def add_piglet(email)
     #get the hash from the account
     piggies = get_piggies(email)
@@ -69,11 +84,7 @@ module Piggies
   end
   
   
-  
-  def set_deposit_percentage
-    
-  end
-  
+ 
 
   
     private :update_piggies, :get_piggies

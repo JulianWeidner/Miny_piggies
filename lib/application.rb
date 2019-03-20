@@ -135,13 +135,24 @@ def application
         puts "| What percentage?(for 5% type: 5)"
         percentage = univ_input.to_i
         user.deposit_percentage(goal, percentage)
-      when 'transfer to piglet'
+      when 'transfer'
         puts ">>>>>>>>> Currently only gets from the accounts total val"
         puts "| To which goal: "
         transfer_to = univ_input
         puts "| Transfer Amount: "
         transfer_amount = univ_input.to_i
         user.transfer_to_piggies(transfer_to, transfer_amount)
+      when 'Auto withdraw'
+        puts ">>>> WIP"
+        puts "| Goal to change: "
+        goal = univ_input
+        puts "| Percentage: "
+        percentage = univ_input.to_i
+        user.withraw_percentage(goal, percentage)
+      when 'lock piglet'
+        puts ">>> WIP"
+        puts "| Lock piglet(t/f): "
+        piglet = univ_input
     end 
     
     
