@@ -127,6 +127,8 @@ def application
         user.add_funds(univ_input.to_i)
       when 'withdraw funds'
         puts "How much money are you withdrawing?"
+        user.piggies_percentage
+        puts
         user.withdraw_funds(univ_input.to_i)
       when 'auto feed'
         puts "| This will be a percentage of each deposit made into the total account.\n| It will automatically allocate that money to the specified piglet (goal).\n"
@@ -142,13 +144,13 @@ def application
         puts "| Transfer Amount: "
         transfer_amount = univ_input.to_i
         user.transfer_to_piggies(transfer_to, transfer_amount)
-      when 'Auto withdraw'
+      when 'auto withdraw'
         puts ">>>> WIP"
         puts "| Goal to change: "
         goal = univ_input
         puts "| Percentage: "
         percentage = univ_input.to_i
-        user.withraw_percentage(goal, percentage)
+        user.withdraw_percentage(goal, percentage)
       when 'lock piglet'
         puts ">>> WIP"
         puts "| Lock piglet(t/f): "

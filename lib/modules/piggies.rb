@@ -58,6 +58,17 @@ module Piggies
     update_piggies(piggies, @email)
   end
   
+  
+  def piggies_percentage
+    piggies = get_piggies(@email)
+    total_percentage = 0
+    for piglet in piggies do 
+      #piglet[1] = hash
+      total_percentage += piglet[1]['withdraw_percentage'] 
+    end
+    print total_percentage
+  end
+  
   def add_piglet(email)
     #get the hash from the account
     piggies = get_piggies(email)
