@@ -10,17 +10,14 @@ module Funds
   
   #funds manipulations
   def add_funds(input_val)
-    new_val = input_val + acc_val
-    update_funds(new_val)
+    total_val = acc_val
+    update_funds(total_val += input_val)
   end
   
   def withdraw_funds(input_val)
-    new_val = acc_val - input_val
-      if new_val >= 0 
-        update_funds(new_val)
-      else
-        puts "Insufficent Funds"
-      end
+    total_val = acc_val
+    
+    puts update_funds(total_val -= input_val)  
   end
 
 end

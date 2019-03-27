@@ -1,0 +1,1 @@
+when withdrawing to the piglets just use total account value * deposiTval add those up, and then subtract the total value from the total account val

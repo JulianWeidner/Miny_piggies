@@ -35,13 +35,13 @@ module Piggies
   
   
   
-  def deposit_percentage(goal, percentage)
+  def set_deposit_percentage(goal, percentage)
     piggies = get_piggies(@email)
     piggies["#{goal}"] ['deposit_percentage'] = percentage
     update_piggies(piggies, @email)
   end
   
-  def withdraw_percentage(goal, percentage)
+  def set_withdraw_percentage(goal, percentage)
     piggies = get_piggies(@email)
     piggies["#{goal}"]['withdraw_percentage'] = percentage
     update_piggies(piggies, @email)
@@ -58,15 +58,50 @@ module Piggies
     update_piggies(piggies, @email)
   end
   
-  
-  def piggies_percentage
+  #returns the value of all the piggies withdraw percentage
+  def piggies_withdraw_percentage
     piggies = get_piggies(@email)
     total_percentage = 0
     for piglet in piggies do 
       #piglet[1] = hash
       total_percentage += piglet[1]['withdraw_percentage'] 
     end
-    print total_percentage
+    total_percentage
+  end
+  
+  def auto_deposit
+    total_val = acc_val
+    deposit_amt_arr = Array.new
+    #get deposit amounts for each piggy store in an array
+    piggies = get_piggies(@email)
+   
+    for piglet in piggies do
+      deposit_amt_arr.push(piglet[1]['deposit_percentage'])
+    end
+    #take each elm of deposit_percentages and multiply them by the total acc_val. store inside val_to_feed
+    for piglet in piggies do 
+      deposit_val = (piglet[1]['deposit_percentage'].to_f / 100 ) * total_val
+      puts piglet[1]['current_val'] += deposit_val
+      deposit_amt_arr.push(deposit_val)
+    end
+    update_piggies(piggies, @email)
+    deposit_amt_arr
+  end
+  
+  
+  def auto_withdraw
+    withdraw_amt_arr = Array.new
+   
+    piggies = get_piggies(@email)
+    for piglet in piggies do
+      if piglet[1]['locked'] == false
+        withdraw_amt = (piglet[1]['withdraw_percentage'].to_f / 100) * (piglet[1]['current_val'])
+        piglet[1]['current_val'] -= withdraw_amt
+        withdraw_amt_arr.push(withdraw_amt)
+      end
+    end
+   update_piggies(piggies, @email) 
+   withdraw_amt_arr
   end
   
   def add_piglet(email)

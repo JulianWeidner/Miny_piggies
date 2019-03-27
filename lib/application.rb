@@ -155,6 +155,24 @@ def application
         puts ">>> WIP"
         puts "| Lock piglet(t/f): "
         piglet = univ_input
+      when 'test'
+=begin
+        to_total = user.auto_withdraw
+        print to_total
+        puts to_total.class
+        to_total.each do |x|
+          user.add_funds(x)
+        end
+=end
+        from_total = user.auto_deposit
+        puts from_total
+        total = user.acc_val
+        
+        from_total.each do |x|
+          total -= x 
+        end
+        user.withdraw_funds(total)   
+     
     end 
     
     
