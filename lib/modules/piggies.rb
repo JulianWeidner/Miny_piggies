@@ -69,39 +69,31 @@ module Piggies
     total_percentage
   end
   
-  def auto_deposit
-    total_val = acc_val
-    deposit_amt_arr = Array.new
-    #get deposit amounts for each piggy store in an array
+  def auto_disperse(new_deposit_val)
     piggies = get_piggies(@email)
-   
-    for piglet in piggies do
-      deposit_amt_arr.push(piglet[1]['deposit_percentage'])
-    end
-    #take each elm of deposit_percentages and multiply them by the total acc_val. store inside val_to_feed
+    remove_from_deposit = []
+    total_removed = 0
     for piglet in piggies do 
-      deposit_val = (piglet[1]['deposit_percentage'].to_f / 100 ) * total_val
-      puts piglet[1]['current_val'] += deposit_val
-      deposit_amt_arr.push(deposit_val)
+      #gets the value of the deposit percentage * the new_deposit_val.
+      val_to_piglet = new_deposit_val * (piglet[1]['deposit_percentage'].to_f / 100)
+      # adds the new funds to the current val of the piglet 
+      piglet[1]['current_val'] += val_to_piglet
+      #Tracks values being removed from the deposit val
+      remove_from_deposit.push(val_to_piglet)
+    end
+    
+    remove_from_deposit.each do |elm|
+      total_removed += elm
     end
     update_piggies(piggies, @email)
-    deposit_amt_arr
+    unallocated_funds = new_deposit_val - total_removed #from deposit
   end
   
-  
+  #Withdraws funds from piglets to the main acc before a withdraw from the main acc
   def auto_withdraw
-    withdraw_amt_arr = Array.new
-   
-    piggies = get_piggies(@email)
-    for piglet in piggies do
-      if piglet[1]['locked'] == false
-        withdraw_amt = (piglet[1]['withdraw_percentage'].to_f / 100) * (piglet[1]['current_val'])
-        piglet[1]['current_val'] -= withdraw_amt
-        withdraw_amt_arr.push(withdraw_amt)
-      end
-    end
-   update_piggies(piggies, @email) 
-   withdraw_amt_arr
+    #get the piglets
+    #loop through piglet, get the percentage to withdraw from the acc
+    #tbh, I don't think this should be a feature
   end
   
   def add_piglet(email)
