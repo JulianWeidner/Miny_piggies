@@ -58,6 +58,25 @@ def application
     
     
   elsif start_input == 'create'
+    log_out = false
+    pass_check = nil
+    print "| Email: "
+    email = gets.chomp.downcase
+    print "| Password: "
+    password = gets.chomp
+    print "| Re-type password: "
+    repassword = gets.chomp
+    password == repassword ? pass_check = true : pass_check = false
+    if pass_check
+      new_acc = Account.new(email, password)
+      print %(| Welcome to Miny Piggies!
+| What is your first name: )
+      first = gets.chomp.downcase
+      print "| What is your last name: "
+      last = gets.chomp.downcase
+      new_acc.create_acc(first, last)
+      print "| Account Created!"
+    end 
   else
     puts "not coded"
     exit
